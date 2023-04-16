@@ -1,10 +1,45 @@
 #include "pch.h"
 
-#include <gtest/gtest.h>
-#include <string>
-#include "secret_cipher.h" 
-#include "random_cipher.h"
+#include "../XtremeP/caesarShift.h";
+#include "../XtremeP/secret_cipher.h"
+// #include (path to random cipher goes here)
 
+// Tests for Caesar Shift (Written by Jake)
+TEST(CaesarShift, FunctionExists) {
+	EXPECT_NO_THROW({
+		caesarShift("Hello");
+		});
+}
+
+TEST(CaesarShift, MessageLengthIsSame) {
+	EXPECT_EQ(static_cast<int>(caesarShift("Hello world").size()), 11);
+	EXPECT_EQ(static_cast<int>(caesarShift("Text").size()), 4);
+}
+
+TEST(CaesarShift, CaseInsensitive) {
+	EXPECT_EQ(caesarShift("HELLO WORLD"), "KHOOR ZRUOG");
+	EXPECT_EQ(caesarShift("MY TEXT"), "PB WHAW");
+}
+
+TEST(CaesarShift, CaseSensitive) {
+	EXPECT_EQ(caesarShift("hello world"), "KHOOR ZRUOG");
+	EXPECT_EQ(caesarShift("my text"), "PB WHAW");
+}
+
+// Tests for Caesar Shift Secret Feature (Written by Jake)
+TEST(JakeSecretTest, ReturnIsCorrect) {
+	EXPECT_EQ(caesarShift("Veni Vidi Vici"), "SPQR");
+	EXPECT_EQ(caesarShift("veni vidi vici"), "SPQR");
+	EXPECT_EQ(caesarShift("VENI VIDI VICI"), "SPQR");
+}
+
+TEST(JakeSecretTest, DoesntAlwaysReturnSecret) {
+	EXPECT_NE(caesarShift("This"), "SPQR");
+	EXPECT_NE(caesarShift("Hello World"), "SPQR");
+}
+
+
+// Tests for Rail Fence Cipher (Other secret feature, written by Hunter)
 TEST(SecretCipherTest, Test1) {
 	std::string input = "HELLO WORLD";
 	std::string expected_output = "HOLELWRDLO";
@@ -37,6 +72,7 @@ TEST(SecretCipherTest, CaseTest) {
 	EXPECT_EQ(expected_output, actual_output);
 }
 
+// Tests for random Cipher feature (Written by Hunter)
 TEST(RandomCipherTest, DifferentCharacters) {
 	// Test that the output has different characters than the input
 	std::string input = "hello";

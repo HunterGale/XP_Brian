@@ -1,20 +1,56 @@
-// XtremeP.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include "caesarShift.h" // include the Caesar Shift implementation
+#include "secret_cipher.h" // include the Rail Fence implementation
+//#include "randomCipher.h" // include the Random Cipher implementation
 
-int main()
-{
-    std::cout << "Hello World!\n";
+using namespace std;
+
+int main() {
+    int method;
+    while (true) {
+        cout << "Please choose an encryption method:\n"
+            << "1. Caesar Shift\n"
+            << "2. Rail Fence\n"
+            << "3. Random Cipher\n";
+        if (!(cin >> method)) {
+            cin.clear(); // clear the fail state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // ignore the invalid input
+            cout << "Invalid input. Please choose a number from 1 to 3." << endl;
+            continue;
+        }
+        if (method >= 1 && method <= 3) {
+            break;
+        }
+        cout << "Invalid input. Please choose a number from 1 to 3." << endl;
+    }
+
+    string input;
+    cout << "Please enter the message to be encrypted: ";
+    cin.ignore(); // ignore the newline character from the previous input
+    getline(cin, input); // read the input message from the user
+
+    string output;
+    switch (method) {
+    case 1: // Caesar Shift
+        output = caesarShift(input);
+        break;
+    case 2: // Rail Fence
+        int numRows;
+        cout << "Please enter the number of rows for the Rail Fence: ";
+        if (!(cin >> numRows)) {
+            cin.clear(); // clear the fail state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // ignore the invalid input
+            cout << "Invalid input. Please enter an integer." << endl;
+            return 1;
+        }
+        output = secret_cipher(input, numRows);
+        break;
+    case 3: // Random Cipher
+        //output = randomCipherEncrypt(input); (need to have correct call to random cipher here)
+        break;
+    }
+
+    cout << "Encrypted message: " << output << endl;
+
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
