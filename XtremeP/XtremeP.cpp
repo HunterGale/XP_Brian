@@ -1,11 +1,13 @@
 #include <iostream>
+#include <stdlib.h> // For srand setup.
 #include "caesarShift.h" // include the Caesar Shift implementation
 #include "secret_cipher.h" // include the Rail Fence implementation
-//#include "randomCipher.h" // include the Random Cipher implementation
+#include "random_cipher.h" // include the Random Cipher implementation
 
 using namespace std;
 
 int main() {
+	srand(time(NULL));
     int method;
     while (true) {
         cout << "Please choose an encryption method:\n"
@@ -46,7 +48,7 @@ int main() {
         output = secret_cipher(input, numRows);
         break;
     case 3: // Random Cipher
-        //output = randomCipherEncrypt(input); (need to have correct call to random cipher here)
+        output = random_cipher(input); (need to have correct call to random cipher here)
         break;
     }
 
