@@ -1,7 +1,11 @@
 #include "pch.h"
 
-#include "../XtremeP/caesarShift.h";
-#include "../XtremeP/secret_cipher.h"
+#include <stdlib.h>;
+
+#include "caesarShift.h";
+#include "secret_cipher.h"
+#include "random_cipher.h"
+
 // #include (path to random cipher goes here)
 
 // Tests for Caesar Shift (Written by Jake)
@@ -74,6 +78,7 @@ TEST(SecretCipherTest, CaseTest) {
 
 // Tests for random Cipher feature (Written by Hunter)
 TEST(RandomCipherTest, DifferentCharacters) {
+	srand(time(NULL));
 	// Test that the output has different characters than the input
 	std::string input = "hello";
 	std::string output = random_cipher(input);
@@ -87,6 +92,7 @@ TEST(RandomCipherTest, DifferentCharacters) {
 }
 
 TEST(RandomCipherTest, SameLength) {
+	srand(time(NULL));
 	// Test that the output has the same length as the input
 	std::string input = "teststring";
 	std::string output = random_cipher(input);
@@ -94,6 +100,7 @@ TEST(RandomCipherTest, SameLength) {
 }
 
 TEST(RandomCipherTest, Random) {
+	srand(time(NULL));
 	// Test that the output is truly random
 	std::string input = "randominputstring";
 	std::string output1 = random_cipher(input);
